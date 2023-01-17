@@ -1,7 +1,9 @@
 package com.devsuperior.dslearnbds.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -13,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -28,11 +31,14 @@ public class User implements Serializable{
 	private String email;
 	private String password;
 	
+	@OneToMany(mappedBy = "user")
+	private List<Notification> notifications = new ArrayList<>();
+	
+	
 	@ManyToMany(fetch = FetchType.EAGER) // SEMPRE QUE CARREGAR, JÁ VAI TRAZER JUNTO A LISTA DE PERFIS DESTE USUÁRIO
 	@JoinTable(name = "tb_user_role",
 				joinColumns = @JoinColumn(name = "user_id"), // CLASSE ONDE EU ESTOU
-				inverseJoinColumns = @JoinColumn(name = "role_id")
-			)
+				inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<>();
 	
 	public User() {}
@@ -47,6 +53,10 @@ public class User implements Serializable{
 
 	
 	
+	public List<Notification> getNotifications() {
+		return notifications;
+	}
+
 	public Set<Role> getRoles() {
 		return roles;
 	}
