@@ -28,3 +28,8 @@ INSERT INTO tb_notification (text, moment, read, route, user_id) VALUES ('Suspec
 INSERT INTO tb_resource (title, description, position, img_Uri, type, offer_id) VALUES ('Rota de aulas HTML' , 'Trilha principal do curso' , 1 , 'http://imagem.com' , 1 , 1);
 INSERT INTO tb_resource (title, description, position, img_Uri, type, offer_id) VALUES ('Fórum' , 'Tire suas dúvidas' , 2 , 'http://imagem.com' , 2 , 1);
 INSERT INTO tb_resource (title, description, position, img_Uri, type, offer_id) VALUES ('Lives' , 'Lives exclusivas da turma' , 3 , 'http://imagem.com' , 0 , 1);
+
+
+INSERT INTO tb_section (title, description, position, img_Uri, resource_id, prerequisite_id) VALUES ('Capítulo 1', 'Neste capítulo vamos começar', 1, 'http://imagem.com', 1, null);
+INSERT INTO tb_section (title, description, position, img_Uri, resource_id, prerequisite_id) VALUES ('Capítulo 2', 'Testes Automatizados', 2, 'http://imagem.com', 1, 1);
+INSERT INTO tb_section (title, description, position, img_Uri, resource_id, prerequisite_id) VALUES ('Capítulo 3', 'Validação e segurança', 3, 'http://imagem.com', 1, 2);
