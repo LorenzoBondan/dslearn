@@ -51,6 +51,9 @@ public abstract class Lesson implements Serializable{ // abstract -> CLASSE QUE 
 	@OneToMany(mappedBy = "lesson")
 	private List<Deliver> deliveries = new ArrayList<>();
 	
+	@OneToMany(mappedBy = "lesson")
+	private List<Topic> topics = new ArrayList<>();
+	
 	public Lesson() {}
 
 	public Lesson(Long id, String title, Integer position, Section section) {
