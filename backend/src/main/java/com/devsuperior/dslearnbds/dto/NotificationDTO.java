@@ -1,47 +1,40 @@
-package com.devsuperior.dslearnbds.entities;
+package com.devsuperior.dslearnbds.dto;
 
-import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import com.devsuperior.dslearnbds.entities.Notification;
 
-@Entity
-@Table(name = "tb_notification")
-public class Notification implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+public class NotificationDTO {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+
 	private Long id;
 	private String text;
-	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
 	private Instant moment;
 	private boolean read;
 	private String route;
+	private Long userId;
 	
-	@ManyToOne
-	@JoinColumn(name = "user_id")
-	private User user;
-	
-	public Notification() {}
+	public NotificationDTO() {}
 
-	public Notification(Long id, String text, Instant moment, Boolean read, String route, User user) {
-		super();
+	public NotificationDTO(Long id, String text, Instant moment, Boolean read, String route, Long userId) {
 		this.id = id;
 		this.text = text;
 		this.moment = moment;
 		this.read = read;
 		this.route = route;
-		this.user = user;
+		this.userId = userId;
+	}
+	
+	// CONVERTER ENTIDADE PARA DTO
+	public NotificationDTO(Notification entity) {
+		id = entity.getId();
+		this.text = entity.getText();
+		this.moment = entity.getMoment();
+		this.read = entity.isRead();
+		this.route = entity.getRoute();
+		this.userId = entity.getUser().getId();
 	}
 
 	public Long getId() {
@@ -84,12 +77,12 @@ public class Notification implements Serializable {
 		this.route = route;
 	}
 
-	public User getUser() {
-		return user;
+	public Long getUserId() {
+		return userId;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
 	@Override
@@ -105,7 +98,7 @@ public class Notification implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Notification other = (Notification) obj;
+		NotificationDTO other = (NotificationDTO) obj;
 		return Objects.equals(id, other.id);
 	}
 	
