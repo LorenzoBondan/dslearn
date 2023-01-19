@@ -150,5 +150,15 @@ public class User implements UserDetails, Serializable{
 		return true;
 	}
 	
+	// MÉTODO USADO PARA O SERVICE AUTHSERVICE, PARA SABER SE O USUÁRIO LOGADO É ADMIN
+	public boolean hasRole(String roleName) {
+		for (Role role : roles) {
+			if(role.getAuthority().equals(roleName)) {
+				return true; // ENCONTROU O QUE ESTAVA PROCURANDO
+			}
+		}
+		return false;
+	}
+	
 	
 }

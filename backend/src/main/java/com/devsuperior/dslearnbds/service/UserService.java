@@ -21,6 +21,9 @@ public class UserService implements UserDetailsService {
 	@Autowired
 	private UserRepository repository;
 	
+	@Autowired
+	private AuthService authService;
+	
 	//MACETE PRA LANÇAR MENSAGEM NO CONSOLE
 	private static Logger logger = org.slf4j.LoggerFactory.getLogger(UserService.class); // É TIPO UMA MESSAGEBOX
 
@@ -43,8 +46,11 @@ public class UserService implements UserDetailsService {
 	//METODO DE BUSCAR USUARIO POR ID
 	
 	@Transactional(readOnly = true)
-	public UserDTO findById(Long id) 
-	{
+	public UserDTO findById(Long id) {
+		
+		authService.validateSelfOrAdmin(id); // SE VALIDAR, VAI EXECUTAR O METODO
+		// MAS SE NÃO FOR O PRÓPRIO USUÁRIO OU NÃO FOR ADMIN, VAI LANÇAR A EXCEÇÃO DO MÉTODO
+		
 		Optional<User> obj = repository.findById(id);
 		User entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not found."));
 		return new UserDTO(entity); // AQUI MUDAMOS, OLHAR O CONSTRUTOR DO DTO
