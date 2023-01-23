@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.devsuperior.dslearnbds.dto.NotificationDTO;
@@ -20,9 +21,11 @@ public class NotificationResource {
 	private NotificationService service;
 	
 	@GetMapping
-	public ResponseEntity<Page<NotificationDTO>> notificationsForCurrentUser(Pageable pageable) //PARÂMETRO TEM QUE FICAR IGUAL AO CAMINHO ACIMA | PathVariable DADO OBRIGATÓRIO
+	public ResponseEntity<Page<NotificationDTO>> notificationsForCurrentUser(
+			@RequestParam(name= "unreadOnly", defaultValue = "false") Boolean unreadOnly,
+			Pageable pageable) //PARÂMETRO TEM QUE FICAR IGUAL AO CAMINHO ACIMA | PathVariable DADO OBRIGATÓRIO
 	{
-		Page<NotificationDTO> page = service.notificationsForCurrentUser(pageable);
+		Page<NotificationDTO> page = service.notificationsForCurrentUser(unreadOnly, pageable);
 		return ResponseEntity.ok().body(page);
 	}
 }
